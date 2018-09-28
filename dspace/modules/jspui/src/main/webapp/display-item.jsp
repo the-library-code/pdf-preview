@@ -395,3 +395,48 @@
     } 
 %>    
 </dspace:layout>
+<!-- PDF Preview -->
+<div id="pdf_overlay" title="<fmt:message key="jsp.display-item.preview_pdf"/>" style="width:100%;height:100%;">
+</div>
+<script>
+    // PDF Preview functionality
+    //
+    // Workaround to restore proper close button to jqueryui dialog, since it is loaded before Bootstrap
+    var bootstrapButton = $.fn.button.noConflict();
+    $.fn.bootstrapBtn = bootstrapButton;
+
+    $(function(){
+        var viewport_width = $(window).width();
+        var viewport_height = $(window).height();
+        // if screen /window width below 800px, allow event propagation so viewer opens in new tab
+        if(viewport_width > 800) {
+            $(".pdf_preview").click(function (event, ui) {
+                event.preventDefault();
+                // Get dimensions with each click in case user resized window
+                var viewport_width = $(window).width();
+                var viewport_height = $(window).height();
+                // By default start with 80% width and height of viewport
+                var overlay_width = viewport_width * 0.8;
+                var overlay_height = viewport_height * 0.8;
+                var bitstream_url = $(this).attr('href');
+                $("#pdf_overlay").dialog({
+                    height: overlay_height,
+                    width: overlay_width,
+                    closeOnEscape: true,
+                    dialogClass: 'pdf-ui-dialog'
+                });
+                $("#pdf_overlay").html('<iframe style="width:100%;height:100%" src="' + bitstream_url + '&showPreviousViewOnLoad=false"></iframe>');
+            });
+        }
+
+        // Disabling "click anywhere to dismiss" for now, as this is now more of a regular dialog
+        // - if reenabled, needs to exclude title bar of containing dialog
+        /*
+        $(window).click(function(event, ui) {
+            if($("#pdf_overlay").dialog("isOpen")) {
+                $("#pdf_overlay").dialog("destroy");
+            }
+        });
+        */
+    });
+</script>

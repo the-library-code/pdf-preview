@@ -54,6 +54,8 @@ import org.dspace.content.service.BundleService;
 import org.dspace.content.service.ItemService;
 import org.dspace.content.service.WorkspaceItemService;
 import org.dspace.core.ConfigurationManager;
+import org.dspace.services.ConfigurationService;
+import org.dspace.services.factory.DSpaceServicesFactory;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.core.I18nUtil;
@@ -198,6 +200,9 @@ import org.dspace.workflow.factory.WorkflowServiceFactory;
  */
 public class ItemTag extends TagSupport
 {
+    // Get modern configuration service
+    protected ConfigurationService configurationService = DSpaceServicesFactory.getInstance().getConfigurationService();
+
     private static final String HANDLE_DEFAULT_BASEURL = "http://hdl.handle.net/";
 
     private static final String DOI_DEFAULT_BASEURL = "http://dx.doi.org/";
@@ -990,10 +995,21 @@ public class ItemTag extends TagSupport
             				if (!b.getFormat(context).isInternal())
             				{
 
+                                // If format is PDF, PDF preview is enabled, and the file is readable, then show the
+                                // preview button
+                                boolean pdfPreview = false;
+                                if(configurationService.getBooleanProperty("webui.pdf.enabled",false)
+                                    && b.getFormat(context) != null
+                                    && b.getFormat(context).getMIMEType() != null
+                                    && "application/pdf".equals(b.getFormat(context).getMIMEType())
+                                    && authorizeService.authorizeActionBoolean(context, b, Constants.READ)) {
+                                    pdfPreview = true;
+                                }
+
                                 // Work out what the bitstream link should be
                                 // (persistent
                                 // ID if item has Handle)
-                                String bsLink = "target=\"_blank\" href=\""
+                                String bsLink = "href=\""
                                         + request.getContextPath();
 
                                 if ((handle != null)
@@ -1012,7 +1028,19 @@ public class ItemTag extends TagSupport
                                 bsLink = bsLink
                                         + UIUtil.encodeBitstreamName(b
                                             .getName(),
-                                            Constants.DEFAULT_ENCODING) + "\">";
+                                            Constants.DEFAULT_ENCODING) + "\" ";
+
+                                // if we offer to preview a PDF file, we need to add a download attribute
+                                // otherwise we need to add the target attribute
+                                if (pdfPreview) {
+                                    bsLink = bsLink + "download=\""
+                                            + UIUtil.encodeBitstreamName(b.getName(), Constants.DEFAULT_ENCODING) + "\"";
+                                } else {
+                                    bsLink = bsLink + "target=\"_blank\"";
+                                }
+
+                                // close the tag
+                                bsLink = bsLink + ">";
 
             					out
                                     .print("<tr><td headers=\"t1\" class=\"standard break-all\">");
@@ -1140,7 +1168,36 @@ public class ItemTag extends TagSupport
             						}
             					}
 
-            					out.print("<a class=\"btn btn-primary\" ");
+                                // add the pdf preview button if appropriate
+                                if(pdfPreview) {
+                                    String pdfViewerBase = request.getContextPath() + "/" +
+                                            configurationService.getProperty("webui.pdf.viewer_url","static/pdfjs/web/viewer.html");
+
+                                    // Unfortunately 'bsLink' starts and ends with partial HTML
+                                    // that assumes how it's going to be used so we'll construct a raw URL again
+                                    String previewBitstreamURL = pdfViewerBase + "?file=" + request.getContextPath();
+                                    if ((handle != null) && (b.getSequenceID() > 0)) {
+                                        previewBitstreamURL += "/bitstream/"
+                                                + item.getHandle() + "/"
+                                                + b.getSequenceID() + "/";
+                                    }
+                                    else {
+                                        previewBitstreamURL += "/retrieve/" + b.getID() + "/";
+                                    }
+
+                                    previewBitstreamURL += UIUtil.encodeBitstreamName(b.getName(), Constants.DEFAULT_ENCODING);
+
+                                    out.print("&nbsp;<a id=\"pdf_preview_file_"+b.getSequenceID()+"\" class=\"btn btn-success pdf_preview\" target=\"_blank\" href=\""+previewBitstreamURL+"\">");
+                                    out.print(LocaleSupport.getLocalizedMessage(
+                                            pageContext,"org.dspace.app.webui.jsptag.ItemTag.preview_pdf")
+                                            + "</a>");
+
+                                }
+
+                                //... then carry on with the download button
+
+                                out.print("<a class=\"btn btn-primary\" ");
+
             					out
                                     .print(bsLink
                                             + LocaleSupport
