@@ -1,69 +1,26 @@
+[![The Library Code GmbH](https://the-library-code.de/the_library_code_gmbh.png)](https://www.the-library-code.de)
 
-# DSpace
+[![ZPID](logo_zpid.png)](https://www.leibniz-psychology.org)
 
-[![Build Status](https://travis-ci.org/DSpace/DSpace.png?branch=master)](https://travis-ci.org/DSpace/DSpace)
+[![DSpace Logo](dspace_logo.png)](http://www.dspace.org)
 
-[DSpace Documentation](https://wiki.duraspace.org/display/DSDOC/) | 
-[DSpace Releases](https://github.com/DSpace/DSpace/releases) |
-[DSpace Wiki](https://wiki.duraspace.org/display/DSPACE/Home) | 
-[Support](https://wiki.duraspace.org/display/DSPACE/Support)
+# PDF Preview
+This extension to DSpace was developped by [The Library Code GmbH](https://www.the-library-code.de) with the support of [Leibniz Institute for Psychology Information (ZPID)](https://leibniz-psychology.org).
 
-DSpace open source software is a turnkey repository application used by more than 
-1000+ organizations and institutions worldwide to provide durable access to digital resources.
-For more information, visit http://www.dspace.org/
+If an item contains a PDF file, instead of the common "Open" button, a button "Preview" and a button "Download" will be shown. The button "Preview" opens a modal dialog  within the user's browser previewing the PDF using Mozilla's phantastic [pdf.js](https://mozilla.github.io/pdf.js/). The buttown "Download" downloads the PDF regularly. This enables users to see any PDF's content easily without having to download the whole file and without using a PDF viewer.
 
-## Downloads
+This extension could be easily changed to show and embeded PDF preview directly in the item view instead of just offering a button to open the preview.
 
-The latest release of DSpace can be downloaded from the [DSpace website](http://www.dspace.org/latest-release/) or from [GitHub](https://github.com/DSpace/DSpace/releases).
+# Installation
+We currently provide the code as it is without suffisticated installation support. If you need help to include this in your DSpace repository, please don't hesitate to contact [The Library Code GmbH](https://www.the-library-code.de).
 
-Past releases are all available via GitHub at https://github.com/DSpace/DSpace/releases
+# Configuration
+The preview can be switched on and off by configuration: `webui.pdf.preview = true`.
 
-## Documentation / Installation
+# License
 
-Documentation for each release may be viewed online or downloaded via our [Documentation Wiki](https://wiki.duraspace.org/display/DSDOC/). 
+This work is licensed under the [DSpace Source Code BSD License](http://www.dspace.org/license).
 
-The latest DSpace Installation instructions are available at:
-https://wiki.duraspace.org/display/DSDOC6x/Installing+DSpace
+# Further development
+Further development of this extension is currently not planned. If you need help changing or enhancing this extension in particular or DSpace in general, please don't hesitate to contact  [The Library Code GmbH](https://www.the-library-code.de).
 
-Please be aware that, as a Java web application, DSpace requires a database (PostgreSQL or Oracle) 
-and a servlet container (usually Tomcat) in order to function.
-More information about these and all other prerequisites can be found in the Installation instructions above.
-
-## Contributing
-
-DSpace is a community built and supported project. We do not have a centralized development or support team, 
-but have a dedicated group of volunteers who help us improve the software, documentation, resources, etc.
-
-We welcome contributions of any type. Here's a few basic guides that provide suggestions for contributing to DSpace:
-* [How to Contribute to DSpace](https://wiki.duraspace.org/display/DSPACE/How+to+Contribute+to+DSpace): How to contribute in general (via code, documentation, bug reports, expertise, etc)
-* [Code Contribution Guidelines](https://wiki.duraspace.org/display/DSPACE/Code+Contribution+Guidelines): How to give back code or contribute features, bug fixes, etc.
-* [DSpace Community Advisory Team (DCAT)](https://wiki.duraspace.org/display/cmtygp/DSpace+Community+Advisory+Team): If you are not a developer, we also have an interest group specifically for repository managers. The DCAT group meets virtually, once a month, and sends open invitations to join their meetings via the [DCAT mailing list](https://groups.google.com/d/forum/DSpaceCommunityAdvisoryTeam).
-
-We also encourage GitHub Pull Requests (PRs) at any time. Please see our [Development with Git](https://wiki.duraspace.org/display/DSPACE/Development+with+Git) guide for more info.
-
-In addition, a listing of all known contributors to DSpace software can be
-found online at: https://wiki.duraspace.org/display/DSPACE/DSpaceContributors
-
-## Getting Help
-
-DSpace provides public mailing lists where you can post questions or raise topics for discussion.
-We welcome everyone to participate in these lists:
-
-* [dspace-community@googlegroups.com](https://groups.google.com/d/forum/dspace-community) : General discussion about DSpace platform, announcements, sharing of best practices
-* [dspace-tech@googlegroups.com](https://groups.google.com/d/forum/dspace-tech) : Technical support mailing list. See also our guide for [How to troubleshoot an error](https://wiki.duraspace.org/display/DSPACE/Troubleshoot+an+error).
-* [dspace-devel@googlegroups.com](https://groups.google.com/d/forum/dspace-devel) : Developers / Development mailing list
-
-Additional support options are listed at https://wiki.duraspace.org/display/DSPACE/Support
-
-DSpace also has an active service provider network. If you'd rather hire a service provider to 
-install, upgrade, customize or host DSpace, then we recommend getting in touch with one of our 
-[Registered Service Providers](http://www.dspace.org/service-providers).
-
-## Issue Tracker
-
-The DSpace Issue Tracker can be found at: https://jira.duraspace.org/projects/DS/summary
-
-## License
-
-DSpace source code is freely available under a standard [BSD 3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
-The full license is available at http://www.dspace.org/license/
