@@ -206,4 +206,4 @@ db.schema = public
 #plugin.sequence.org.dspace.authenticate.AuthenticationMethod = org.dspace.authenticate.PasswordAuthentication
 
 # Enable PDF-Preview
-webui.pdf.preview = true
+webui.pdf.enabled = true

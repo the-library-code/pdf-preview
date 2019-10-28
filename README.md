@@ -15,7 +15,7 @@ This extension could be easily changed to show and embeded PDF preview directly 
 We currently provide the code as it is without suffisticated installation support. If you need help to include this in your DSpace repository, please don't hesitate to contact [The Library Code GmbH](https://www.the-library-code.de).
 
 # Configuration
-The preview can be switched on and off by configuration: `webui.pdf.preview = true`.
+The preview can be switched on and off by configuration: `webui.pdf.enabled = true`.
 
 # License
 
